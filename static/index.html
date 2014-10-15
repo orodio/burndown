@@ -1,0 +1,64 @@
+<!DOCTYPE HTML>
+<html>
+  <head>
+    <script>
+      var oct15ToOct29 = {
+        commitment: 72,
+        days: 15,
+        data: [
+          { date: "Oct 15", total: 72, notStarted: 56, started: 8, testing: 8 }
+        ]
+      };
+
+      var sprint = oct15ToOct29;
+    </script>
+
+    <style>
+      body { background:azure; }
+      svg  { display:block; margin:3em auto; }
+      svg * { shape-rendering:crispEdges; }
+      .goal, .commitment { opacity: 0.5, stroke-dasharray:5px 15px; }
+      .point, .remaining, .goal, .axis path, .axis line { stroke:tomato; stroke-width:1px; }
+      .total, .point-total, .commitment { stroke:slategrey; stroke-width:1px; }
+      .remaining, .goal, .axis path, .axis line, .total, .point-total { fill: none; }
+      .point, .point-total { fill:azure; }
+      .axis text { font-family:helvetica; font-size:10px; font-weight:200; letter-spacing:0.16em; fill:tomato; }
+    </style>
+  </head>
+  <body>
+    <div class="Burndown"></div>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/d3/3.4.12/d3.min.js"></script>
+    <script>
+
+      var w = 800;
+      var h = 500;
+      var p = {l: 30, r: 10, t: 20, b: 30};
+      var x = d3.scale.linear().domain([1, sprint.days]).range([p.l, w - p.r]);
+      var y = d3.scale.linear().domain([sprint.commitment + 10, 0]).range([p.t, h - p.b]);
+      var xAxis = d3.svg.axis().scale(x).orient("bottom").ticks(sprint.days);
+      var yAxis = d3.svg.axis().scale(y).orient("left").ticks(10);
+
+      function xOrd(d, i) { return x(i + 1); }
+      function yRemaining(d) { return y(d.notStarted + d.started + d.testing); }
+      function yTotal(d) {return y(d.total); }
+      function translate(x, y) { return "translate("+x+","+y+")"; }
+      function axisAttr(x,y) { return {class: "axis", transform: translate(x, y)}; }
+
+      var svg = d3.select(".Burndown").append("svg").attr({width: w, height: h});
+
+      svg.append("g").call(xAxis).attr(axisAttr(0, h - p.b));
+      svg.append("g").call(yAxis).attr(axisAttr(p.l, 0));
+
+      svg.append("line").attr({ class: "goal", x1: x(1), x2: x(sprint.days), y1: y(sprint.commitment), y2: y(0), "stroke-dasharray": "5, 15" });
+      svg.append("line").attr({ class: "commitment", x1: x(1), x2: x(sprint.days), y1: y(sprint.commitment), y2: y(sprint.commitment), "stroke-dasharray": "5, 15" });
+
+      var remaining = d3.svg.line().x(xOrd).y(yRemaining);
+      svg.append("path").attr({ class: "remaining", d: remaining(sprint.data) });
+      svg.selectAll("circle.point").data(sprint.data).enter().append("circle").attr({r: 3, cx: xOrd, cy: yRemaining, class: "point" });
+
+      var total     = d3.svg.line().x(xOrd).y(yTotal);
+      svg.append("path").attr({ class: "total", d: total(sprint.data) });
+      svg.selectAll("circle.point-total").data(sprint.data).enter().append("circle").attr({r: 3, cx: xOrd, cy: yTotal, class: "point-total" });
+    </script>
+  </body>
+</html>
