@@ -52,17 +52,16 @@
 
       svg.append("g").call(xAxis).attr(axisAttr(0, h - p.b));
       svg.append("g").call(yAxis).attr(axisAttr(p.l, 0));
+      svg.append("line").attr({class: "goal", x1: x(1), x2: x(sprint.days), y1: y(sprint.commitment), y2: y(0), "stroke-dasharray": "5, 15"});
+      svg.append("line").attr({class: "commitment", x1: x(1), x2: x(sprint.days), y1: y(sprint.commitment), y2: y(sprint.commitment), "stroke-dasharray": "5, 15"});
 
-      svg.append("line").attr({ class: "goal", x1: x(1), x2: x(sprint.days), y1: y(sprint.commitment), y2: y(0), "stroke-dasharray": "5, 15" });
-      svg.append("line").attr({ class: "commitment", x1: x(1), x2: x(sprint.days), y1: y(sprint.commitment), y2: y(sprint.commitment), "stroke-dasharray": "5, 15" });
-
+      var total = d3.svg.line().x(xOrd).y(yTotal);
+      svg.append("path").attr({class: "total", d: total(sprint.data)});
+      svg.selectAll("circle.point-total").data(sprint.data).enter().append("circle").attr({r: 3, cx: xOrd, cy: yTotal, class: "point-total"});
+      
       var remaining = d3.svg.line().x(xOrd).y(yRemaining);
-      svg.append("path").attr({ class: "remaining", d: remaining(sprint.data) });
-      svg.selectAll("circle.point").data(sprint.data).enter().append("circle").attr({r: 3, cx: xOrd, cy: yRemaining, class: "point" });
-
-      var total     = d3.svg.line().x(xOrd).y(yTotal);
-      svg.append("path").attr({ class: "total", d: total(sprint.data) });
-      svg.selectAll("circle.point-total").data(sprint.data).enter().append("circle").attr({r: 3, cx: xOrd, cy: yTotal, class: "point-total" });
+      svg.append("path").attr({class: "remaining", d: remaining(sprint.data)});
+      svg.selectAll("circle.point").data(sprint.data).enter().append("circle").attr({r: 3, cx: xOrd, cy: yRemaining, class: "point"});
     </script>
   </body>
 </html>
