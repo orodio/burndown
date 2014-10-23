@@ -6,14 +6,15 @@
         commitment: 72,
         days: 15,
         data: [
-          { date: "Oct 15", total: 72, notStarted: 56, started: 8,  testing: 8 },
-          { date: "Oct 16", total: 74, notStarted: 55, started: 14, testing: 5 },
-          { date: "Oct 17", total: 74, notStarted: 54, started: 13, testing: 1 },
-          { date: "Oct 18", total: 74, notStarted: 54, started: 13, testing: 1 },
-          { date: "Oct 19", total: 74, notStarted: 54, started: 13, testing: 1 },
-          { date: "Oct 20", total: 74, notStarted: 43, started: 11, testing: 6 },
-          { date: "Oct 21", total: 74, notStarted: 32, started: 21, testing: 5 },
-          { date: "Oct 22", total: 73, notStarted: 15, started: 22, testing: 6 }
+          { date: "Oct 15", total: 72, notStarted: 56, started: 8,  testing: 8, done: 0 },
+          { date: "Oct 16", total: 74, notStarted: 55, started: 14, testing: 5, done: 0 },
+          { date: "Oct 17", total: 74, notStarted: 54, started: 13, testing: 1, done: 6 },
+          { date: "Oct 18", total: 74, notStarted: 54, started: 13, testing: 1, done: 6 },
+          { date: "Oct 19", total: 74, notStarted: 54, started: 13, testing: 1, done: 6 },
+          { date: "Oct 20", total: 74, notStarted: 43, started: 11, testing: 6, done: 14 },
+          { date: "Oct 21", total: 74, notStarted: 32, started: 21, testing: 5, done: 16 },
+          { date: "Oct 22", total: 73, notStarted: 15, started: 22, testing: 6, done: 30 },
+          { date: "Oct 23", total: 73, notStarted: 5,  started: 26, testing: 7, done: 35 }
         ]
       };
 
@@ -23,7 +24,6 @@
     <style>
       body { background:azure; }
       svg  { display:block; margin:3em auto; }
-      svg * { shape-rendering:crispEdges; }
       .goal, .commitment { opacity: 0.5, stroke-dasharray:5px 15px; }
       .point, .remaining, .goal, .axis path, .axis line { stroke:tomato; stroke-width:1px; }
       .total, .point-total, .commitment { stroke:slategrey; stroke-width:1px; }
