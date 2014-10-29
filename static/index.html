@@ -52,9 +52,9 @@
     <script>
       var w, h, p, x, y, xAxis, yAxis, svg, total, remaining;
       
-      w = 800; h = 500; p = {l: 30, r: 10, t: 20, b: 30};
+      w = 800; h = 600; p = {l: 30, r: 10, t: 40, b: 50};
       x = d3.scale.linear().domain([1, sprint.days]).range([p.l, w - p.r]);
-      y = d3.scale.linear().domain([sprint.commitment + 10, 0]).range([p.t, h - p.b]);
+      y = d3.scale.linear().domain([sprint.commitment, 0]).range([p.t, h - p.b]);
       xAxis = d3.svg.axis().scale(x).orient("bottom").ticks(sprint.days);
       yAxis = d3.svg.axis().scale(y).orient("left").ticks(10);
 
